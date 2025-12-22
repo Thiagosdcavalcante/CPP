@@ -58,8 +58,8 @@ const char *AForm::FormNotSignedException::what() const throw() {
 }
 
 std::ostream &operator<<(std::ostream &os, const AForm &Fr) {
-    os << CLR_HEADER << "AForm: " << CLR_RESET << Fr.getName() << "\n\tGrade to sign: " << Fr.getGradeToSign()
-       << "\n\tGrade to execute: " << Fr.getGradeToExecute()
-       << "\n\tStatus: " << (Fr.getSigned() ? (std::string(CLR_SUCCESS) + "Signed" + CLR_RESET) : (std::string(CLR_WARNING) + "Unsigned" + CLR_RESET));
+     os << CLR_HEADER << "Formulário: " << CLR_RESET << Fr.getName() << "\n\tGrau para assinar: " << Fr.getGradeToSign()
+         << "\n\tGrau para executar: " << Fr.getGradeToExecute()
+         << "\n\tStatus: " << (Fr.getSigned() ? (std::string(CLR_SUCCESS) + "Assinado" + CLR_RESET) : (std::string(CLR_WARNING) + "Não assinado" + CLR_RESET));
     return os;
 }

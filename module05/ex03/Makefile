@@ -1,16 +1,10 @@
-WHITE := \033[1;37m
-RED := \033[1;31m
-GREEN := \033[1;32m
-YELLOW := \033[1;33m
-CYAN := \033[1;36m
-RESET := \033[0m
-
-NAME = ex01A
+NAME = ex03
 CC = c++
 FLAGS = -Werror -Wall -Wextra -std=c++98
-MAKEFLAGS += --silent
 
-SRCS = main.cpp sources/Bureaucrat.cpp sources/Form.cpp sources/tests.cpp
+SRCS = main.cpp sources/Bureaucrat.cpp sources/AForm.cpp \
+	sources/ShrubberyCreationForm.cpp sources/RobotomyRequestForm.cpp sources/PresidentialPardonForm.cpp \
+	sources/Intern.cpp sources/tests.cpp
 
 OBJS_DIR = objs
 OBJS = $(SRCS:.cpp=.o)
@@ -19,9 +13,9 @@ OBJS := $(addprefix $(OBJS_DIR)/, $(notdir $(OBJS)))
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	@echo "$(CYAN)   Compilando arquivos...$(RESET)"
+	@echo "   Compilando ex03..."
 	$(CC) $(FLAGS) -o $(NAME) $(OBJS)
-	@echo "$(GREEN)   Tudo pronto!$(RESET)"
+	@echo "   Pronto: $(NAME)"
 
 $(OBJS_DIR):
 	mkdir -p $(OBJS_DIR)
@@ -33,12 +27,13 @@ $(OBJS_DIR)/%.o: sources/%.cpp | $(OBJS_DIR)
 	$(CC) $(FLAGS) -c $< -o $@
 
 clean:
-	@echo "$(YELLOW)   Limpando objetos...$(RESET)"
 	@rm -rf $(OBJS_DIR)/*.o
 	@rm -rf objs
 
 fclean: clean
 	@rm -f $(NAME)
+	@echo "   Removendo arquivos de teste gerados..."
+	@rm -f *_shrubbery || true
 
 re: fclean all
 
