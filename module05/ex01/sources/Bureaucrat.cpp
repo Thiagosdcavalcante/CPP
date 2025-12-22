@@ -1,92 +1,94 @@
 #include "../includes/Bureaucrat.hpp"
+#include "../includes/Colors.hpp"
+#include "../includes/Form.hpp"
 
-/* CONSTRUTORES */
+Bureaucrat::Bureaucrat(void): _name(""), _grade(0) {
 
-Bureaucrat::Bureaucrat(void): _name("random annoying"), _grade(150)
-{
-    std::cout << _name << " está pronto para ser burocrata!" << std::endl;
+    std::cout << CLR_INFO << "Bureaucrat default constructor called" << CLR_RESET << std::endl;
+
+    throw GradeTooHighException();
 }
 
-Bureaucrat::Bureaucrat(std::string name, int grade): _name(name), _grade(grade)
-{
-    if (grade < 1) {
-        throw GradeTooHighException();
-    }
-    else if (grade > 150) {
+Bureaucrat::~Bureaucrat(void){
+
+    std::cout << CLR_DIM << "Bureaucrat destructor called" << CLR_RESET << std::endl;
+}
+
+Bureaucrat::Bureaucrat(const std::string name,  int grade)
+    : _name(name), _grade(grade) {
+
+    std::cout << CLR_INFO << "Bureaucrat name constructor called" << CLR_RESET << std::endl;
+
+    if (grade > MIN)
         throw GradeTooLowException();
-    }
-    std::cout << _name << " está pronto para ser burocrata!" << std::endl;
+    if (grade < MAX)
+        throw GradeTooHighException();
 }
 
-Bureaucrat::Bureaucrat(const Bureaucrat &other)
-{
-    std::cout << "Construtor de cópia de Bureaucrat chamado." << std::endl;
+Bureaucrat::Bureaucrat( const Bureaucrat &other)
+    : _name(other._name), _grade(other._grade) {
+
+    std::cout << CLR_INFO << "Bureaucrat copy constructor called" << CLR_RESET << std::endl;
     *this = other;
 }
 
-Bureaucrat &Bureaucrat::operator=(const Bureaucrat &other)
-{
-    std::cout << "Operador de atribuição por cópia chamado." << std::endl;
-    if (this != &other)
+Bureaucrat &Bureaucrat::operator=(const Bureaucrat &other){
+    std::cout << CLR_DIM << "Bureaucrat copy assignment operator called" << CLR_RESET << std::endl;
+    if (this != &other){
         _grade = other._grade;
-    else
-         std::cout << "Autoatribuição detectada! Os objetos já têm o mesmo endereço." <<std::endl;
-    return (*this);
-}
-
-/* MÉTODO get */
-
-std::string Bureaucrat::getName(void) const
-{
-    return (_name);
-}
-
-int Bureaucrat::getGrade(void) const
-{
-    return (_grade);
-}
-
-/* iNcremento e decremento */
-
-void Bureaucrat::upGrade(void)
-{
-    if (_grade == 1) {
-        throw GradeTooHighException();
     }
+    return *this;
+}
+
+std::string    Bureaucrat::getName(void) const{
+
+    return _name;
+}
+
+int Bureaucrat::getGrade(void) const{
+
+    return _grade;
+}
+
+void  Bureaucrat::incrementGrade(void){
+
+    if(_grade == MAX)
+        throw GradeTooHighException();
+
     _grade--;
 }
+void  Bureaucrat::decrementGrade(void){
 
-void Bureaucrat::downGrade(void)
-{
-    if (_grade == 150) {
+    if (_grade == MIN)
         throw GradeTooLowException();
-    }
+
     _grade++;
 }
 
-/* MENSAGENS DE ERRO */
+void Bureaucrat::signForm(Form &Fr){
 
-const char *Bureaucrat::GradeTooHighException::what(void) const throw()
-{
-    return ("O maior grau possível é 1!");
+    try {
+        Fr.beSigned(*this);
+        std::cout << CLR_SUCCESS << _name << " assinou " << Fr.getName() << CLR_RESET << std::endl;
+    } catch (std::exception &e){
+        std::cerr << CLR_ERROR << _name << " não conseguiu assinar " << Fr.getName()
+                  << " porque " << e.what() << CLR_RESET << std::endl;
+    }
 }
 
-const char *Bureaucrat::GradeTooLowException::what(void) const throw()
-{
-    return ("O menor grau possível é 150!");
+const char *Bureaucrat::GradeTooLowException::what() const throw(){
+
+    return "Bureaucrat: Grade is too Low";
 }
 
-/* overload bureaucrat */
+const char *Bureaucrat::GradeTooHighException::what() const throw(){
 
-std::ostream &operator<<(std::ostream &osStream, Bureaucrat const &that)
-{
-    osStream << that.getName() << ", burocrata grau " << that.getGrade() << ".";
-    return(osStream);
+    return "Bureaucrat: Grade is too High";
 }
 
-/* DESTRUTOR */
-
-Bureaucrat::~Bureaucrat(void)
-{
-    std::cout << _name << " morreu de tédio!" << std::endl;
+std::ostream &operator<<(std::ostream &os, const Bureaucrat &Br) {
+    return os << CLR_INFO << Br.getName() << CLR_RESET
+              << ", Bureaucrat grade "
+              << Br.getGrade()
+              << ".";
 }

@@ -1,10 +1,10 @@
 #ifndef TESTS_HPP
-#define TESTS_HPP
+# define TESTS_HPP
 
 #include "Bureaucrat.hpp"
+#include "Form.hpp"
 
-// Prototypes para as funções de teste usadas em main.cpp
-void invalidSituationsForBuroucrats(void);
-void validSituationsForBuroucrats(void);
+void invalidFormTests(void);
+void validFormTests(void);
 
 #endif

@@ -1,10 +1,11 @@
-
-#include "includes/Bureaucrat.hpp"
 #include "includes/tests.hpp"
+#include "includes/Bureaucrat.hpp"
+#include "includes/Form.hpp"
+#include <iostream>
 
 int main(void)
 {
-    invalidSituationsForBuroucrats();
-    validSituationsForBuroucrats();
-    return (0);
+	invalidFormTests();
+	validFormTests();
+	return 0;
 }
