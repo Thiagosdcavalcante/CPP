@@ -3,7 +3,7 @@
 #include <iostream>
 
 int main() {
-    Data original("ismael", "ismael@42.com");
+    Data original("Thiago", "thiago@42.com");
 
     std::cout << "Objeto original:\n" << original << std::endl;
 
