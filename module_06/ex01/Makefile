@@ -1,35 +1,35 @@
-RED					= $(shell tput setaf 1)
-GREEN				= $(shell tput setaf 2)
-YELLOW				= $(shell tput setaf 3)
-BLUE				= $(shell tput setaf 4)
-MAGENT				= $(shell tput setaf 5)
-RESET				= $(shell tput sgr0)
+RED                 = $(shell tput setaf 1)
+GREEN               = $(shell tput setaf 2)
+BLUE                = $(shell tput setaf 4)
+RESET               = $(shell tput sgr0)
 
-NAME				= serialize
-INCLUDES 			= -I
-FILES				= $(wildcard *.cpp)
-OBJS				= $(FILES:%.cpp=%.o)
-COMPILER			= c++
-CFLAGS				= -Wall -Wextra -Werror -std=c++98
+NAME                = serialize
 
-all: 				$(NAME)
+COMPILER            = c++
+CFLAGS              = -Wall -Wextra -Werror -std=c++98
 
-$(NAME):			$(OBJS)
+FILES               = main.cpp Serializer.cpp Data.cpp
+HEADERS             = Serializer.hpp Data.hpp
+OBJS                = $(FILES:%.cpp=%.o)
+
+all:                $(NAME)
+
+$(NAME):            $(OBJS)
 					@$(COMPILER) $(CFLAGS) $(OBJS) -o $(NAME)
-					@echo "$(BLUE)Compiled $(NAME) successfully$(RESET)"
+					@echo "$(BLUE)✨ $(NAME) compilado com sucesso!$(RESET)"
 
-%.o:				%.cpp
+%.o:                %.cpp $(HEADERS)
 					@$(COMPILER) $(CFLAGS) -c $< -o $@
-					@echo "$(GREEN)Compiled$(RESET) $(notdir $<)"
+					@echo "$(GREEN)✔ Compilado:$(RESET) $(notdir $<)"
 
 clean:
-					@echo "$(RED)Removing$(RESET) $(NAME) objects"
 					@rm -rf $(OBJS)
+					@echo "$(RED)Cleaning:$(RESET) Arquivos objetos removidos."
 
-fclean: 			clean
-					@echo "$(RED)Removing$(RESET) $(NAME)"
+fclean:             clean
 					@rm -rf $(NAME)
+					@echo "$(RED)Full Clean:$(RESET) Executável $(NAME) removido."
 
-re:					fclean all
+re:                 fclean all
 
-.PHONY: 			all clean fclean re
+.PHONY:             all clean fclean re

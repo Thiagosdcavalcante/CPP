@@ -3,7 +3,7 @@
 int main(int argc, char **argv){
 
 	if (argc != 2){
-		std::cerr << "Usage: ./Convert <literal>" << std::endl;
+		std::cerr << "Usage: ./Convert <Numero literal>" << std::endl;
 		return (1);
 	}
 

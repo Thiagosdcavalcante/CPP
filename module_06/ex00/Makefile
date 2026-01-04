@@ -1,35 +1,34 @@
-RED					= $(shell tput setaf 1)
-GREEN				= $(shell tput setaf 2)
-YELLOW				= $(shell tput setaf 3)
-BLUE				= $(shell tput setaf 4)
-MAGENT				= $(shell tput setaf 5)
-RESET				= $(shell tput sgr0)
+RED                 = $(shell tput setaf 1)
+GREEN               = $(shell tput setaf 2)
+BLUE                = $(shell tput setaf 4)
+RESET               = $(shell tput sgr0)
 
-NAME				= convert
-INCLUDES 			= -I
-FILES				= $(wildcard *.cpp)
-OBJS				= $(FILES:%.cpp=%.o)
-COMPILER			= c++
-CFLAGS				= -Wall -Wextra -Werror -std=c++98
+NAME                = convert
+COMPILER            = c++
+CFLAGS              = -Wall -Wextra -Werror -std=c++98
 
-all: 				$(NAME)
+FILES               = main.cpp ScalarConverter.cpp
+HEADERS             = ScalarConverter.hpp
+OBJS                = $(FILES:%.cpp=%.o)
 
-$(NAME):			$(OBJS)
-					@$(COMPILER) $(CFLAGS) $(OBJS) -no-pie -o $(NAME)
-					@echo "$(BLUE)Compiled $(NAME) successfully$(RESET)"
+all:                $(NAME)
 
-%.o:				%.cpp
+$(NAME):            $(OBJS)
+					@$(COMPILER) $(CFLAGS) $(OBJS) -o $(NAME)
+					@echo "$(GREEN)✨ $(NAME) compilado com sucesso!$(RESET)"
+
+%.o:                %.cpp $(HEADERS)
 					@$(COMPILER) $(CFLAGS) -c $< -o $@
-					@echo "$(GREEN)Compiled$(RESET) $(notdir $<)"
+					@echo "$(BLUE)✔ Compilado:$(RESET) $(notdir $<)"
 
 clean:
-					@echo "$(RED)Removing$(RESET) $(NAME) objects"
 					@rm -rf $(OBJS)
+					@echo "$(RED)Cleaning:$(RESET) Arquivos objetos removidos."
 
-fclean: 			clean
-					@echo "$(RED)Removing$(RESET) $(NAME)"
+fclean:             clean
 					@rm -rf $(NAME)
+					@echo "$(RED)Full Clean:$(RESET) Executável $(NAME) removido."
 
-re:					fclean all
+re:                 fclean all
 
-.PHONY: 			all clean fclean re
+.PHONY:             all clean fclean re

@@ -16,11 +16,11 @@ all: 				$(NAME)
 
 $(NAME):			$(OBJS)
 					@$(COMPILER) $(CFLAGS) $(OBJS) -o $(NAME)
-					@echo "$(BLUE)Compiled $(NAME) successfully$(RESET)"
+					@echo "$(GREEN)Compiled $(NAME) successfully$(RESET)"
 
 %.o:				%.cpp
 					@$(COMPILER) $(CFLAGS) -c $< -o $@
-					@echo "$(GREEN)Compiled$(RESET) $(notdir $<)"
+					@echo "$(BLUE)Compiled$(RESET) $(notdir $<)"
 
 clean:
 					@echo "$(RED)Removing$(RESET) $(NAME) objects"

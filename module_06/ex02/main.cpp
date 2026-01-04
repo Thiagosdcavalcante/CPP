@@ -1,21 +1,30 @@
 #include "Base.hpp"
 #include <iostream>
+#include <cstdlib>
 #include <ctime>
+#include <unistd.h> // Para a função usleep
 
 int main() {
 
+    std::srand(std::time(0));
 
-    Base* test= generate();
-	Base& testref = *test;
-    std::cout << "Identificando via ponteiro: ";
-    identify(test);
+    std::cout << "--- Iniciando Teste de Identificação Real ---" << std::endl;
 
-    std::cout << "Identificando via referência: ";
-    identify(*test);
+    for (int i = 0; i < 10; i++) {
+        std::cout << "Teste: " << i + 1 << " -->  ";
 
-    std::cout << "Identificando via referência: ";
-    identify(testref);
+        Base* instance = generate();
 
-    delete test;
+        identify(instance);
+
+        identify(*instance);
+
+        delete instance;
+
+        std::cout << "-----------------------" << std::endl;
+
+        usleep(100000); 
+    }
+
     return 0;
 }
