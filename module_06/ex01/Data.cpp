@@ -4,16 +4,14 @@ Data::Data(void){}
 
 Data::~Data(void){}
 
-Data::Data(std::string name, std::string mail):_name(name), _mail(mail){}
+Data::Data(std::string name, std::string mail) : _name(name), _mail(mail){}
 
-Data::Data(const Data &other){
-  *this = other;
-}
+Data::Data(const Data &other) { *this = other; }
 
-Data &Data::operator=(const Data &other){
-  if (this != &other){
-	_name = other._name;
-	_mail = other._mail;
+Data &Data::operator=(const Data &other) {
+  if (this != &other) {
+    _name = other._name;
+    _mail = other._mail;
   }
   return *this;
 }
@@ -31,7 +29,7 @@ std::string Data::getName(void) const { return _name; }
 std::string Data::getMail(void) const { return _mail; }
 
 
-std::ostream &operator<<(std::ostream &os, const Data &it){
-  os<< "Name: " << it.getName() << std::endl << "Mail: " << it.getMail() << std::endl;
-  return os;
+std::ostream &operator<<(std::ostream &os, const Data &it) {
+    os << "Name: " << it.getName() << " | Mail: " << it.getMail();
+    return os;
 }

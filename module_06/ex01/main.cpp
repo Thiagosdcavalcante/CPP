@@ -3,21 +3,20 @@
 #include <iostream>
 
 int main() {
-    Data original("ismael", "ismael@42.com");
+    Data original("Thiago", "tsantana@42.com");
 
-    std::cout << "Objeto original:\n" << original << std::endl;
+    std::cout << "Original: " << original << " | Endereço: " << &original << std::endl;
 
     uintptr_t raw = Serializer::serialize(&original);
-    std::cout << "Endereço serializado (uintptr_t): " << raw << std::endl;
+    std::cout << "Raw (uintptr_t): " << raw << std::endl;
 
-    Data* deserialized = Serializer::deserialize(raw);
+    Data* result = Serializer::deserialize(raw);
+    std::cout << "Deserializado: " << *result << " | Endereço: " << result << std::endl;
 
-    std::cout << "Objeto desserializado:\n" << *deserialized << std::endl;
-
-    if (deserialized == &original)
-        std::cout << "Sucesso: o ponteiro desserializado é o mesmo do original.\n";
+    if (result == &original)
+        std::cout << "\033[32m✔ SUCESSO: Os ponteiros são idênticos.\033[0m" << std::endl;
     else
-        std::cout << "Erro: ponteiros diferentes.\n";
+        std::cout << "\033[31m✘ ERRO: Os ponteiros divergem!\033[0m" << std::endl;
 
     return 0;
 }
